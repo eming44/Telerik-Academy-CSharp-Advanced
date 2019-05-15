@@ -1,0 +1,353 @@
+01. Decimal to binary-------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static string DecToBinary(BigInteger value)
+    {
+        string result = "";
+
+        while(value > 0)
+        {
+            BigInteger digit = value % 2;
+            value /= 2;
+            result = digit + result;
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        BigInteger n = BigInteger.Parse(Console.ReadLine());
+        Console.WriteLine(DecToBinary(n));    
+    }
+}
+
+02. Binary to decimal-------------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static BigInteger DecToBinary(string value)
+    {
+        BigInteger result = 0;
+
+        foreach (char item in value)
+        {
+            result = result * 2 + (item - '0');
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        string n = Console.ReadLine();
+        Console.WriteLine(DecToBinary(n));    
+    }
+}
+
+03. Decimal to hexadecimal-----------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static string DecToHex(long value)
+    {
+        string result = "";
+        string hexDigits = "0123456789ABCDEF";
+
+        do
+        {
+            long digitValue = value % 16;
+            char digit = hexDigits[(int)digitValue];
+            value /= 16;
+            result = digit + result;
+
+        } while (value > 0);
+
+        return result;
+    }
+
+    public static void Main()
+    {
+        long n = long.Parse(Console.ReadLine());
+        Console.WriteLine(DecToHex(n));
+    }
+}
+
+04. Hexadecimal to decimal-------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static BigInteger HexToDec(string value)
+    {
+        BigInteger result = 0;
+
+        foreach (char digit in value)
+        {
+            BigInteger digitValue;
+
+            if (char.IsDigit(digit))
+            {
+                digitValue = digit - '0';
+            }
+            else
+            {
+                digitValue = digit - 'A' + 10;
+            }
+
+            result = 16 * result + digitValue;
+
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        string n = Console.ReadLine();
+        Console.WriteLine(HexToDec(n));
+    }
+}
+
+05. Hexadecimal to binary-----------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static string HexToBin(string value)
+    {
+        string result = "";
+
+        string[] BinStart = {"1", "10", "11", "100", "101", "110", "111"};
+        string[] Bin = {"0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011", "1100", "1101", "1110", "1111" };
+
+        for (int i = 0; i < value.Length; i++)
+        {
+            string digitValue = "";
+            double check = char.GetNumericValue(value[i]);
+
+            if (char.IsDigit(value[i]))
+            {
+                if (i == 0 && check > 0 && check < 8)
+                {
+                    digitValue = BinStart[(int)check - 1];
+                }
+
+                else
+                {
+                    digitValue = Bin[(int)check];
+                }
+            }
+            else
+            {
+                int numberOfLetter = value[i] - 'A' + 10;
+                digitValue = Bin[(int)numberOfLetter];
+            }
+
+            result += digitValue;
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        string n = Console.ReadLine();
+        Console.WriteLine(HexToBin(n));
+    }
+}
+
+06. Binary to hexadecimal---------------------------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+    static string BinToHex(string value)
+    {
+        string result = "";
+        int countLength = 0;
+        int step = 4;
+        string current = "";
+
+        for (int i = value.Length - 1; i >= 0; i -= step)
+        {
+            if (value.Length - countLength > 3)
+            {
+                current = char.ToString(value[i - 3]) + char.ToString(value[i - 2]) + char.ToString(value[i - 1]) + char.ToString(value[i]);
+
+                switch (current)
+                {
+                    case "0000":
+                        result = "0" + result;
+                        break;
+                    case "0001":
+                        result = "1" + result;
+                        break;
+                    case "0010":
+                        result = "2" + result;
+                        break;
+                    case "0011":
+                        result = "3" + result;
+                        break;
+                    case "0100":
+                        result = "4" + result;
+                        break;
+                    case "0101":
+                        result = "5" + result;
+                        break;
+                    case "0110":
+                        result = "6" + result;
+                        break;
+                    case "0111":
+                        result = "7" + result;
+                        break;
+                    case "1000":
+                        result = "8" + result;
+                        break;
+                    case "1001":
+                        result = "9" + result;
+                        break;
+                    case "1010":
+                        result = "A" + result;
+                        break;
+                    case "1011":
+                        result = "B" + result;
+                        break;
+                    case "1100":
+                        result = "C" + result;
+                        break;
+                    case "1101":
+                        result = "D" + result;
+                        break;
+                    case "1110":
+                        result = "E" + result;
+                        break;
+                    case "1111":
+                        result = "F" + result;
+                        break;
+                }
+
+                countLength += step;
+            }
+
+            else
+            {
+                countLength += step;
+                int max = countLength - value.Length;
+                for (int j = 0; j < max; j++)
+                {
+                    value = "0" + value;
+                }
+
+                int k = 0;
+                current = char.ToString(value[k]) + char.ToString(value[k + 1]) + char.ToString(value[k + 2]) + char.ToString(value[k + 3]);
+                switch (current)
+                {
+                    case "0000":
+                        result = "0" + result;
+                        break;
+                    case "0001":
+                        result = "1" + result;
+                        break;
+                    case "0010":
+                        result = "2" + result;
+                        break;
+                    case "0011":
+                        result = "3" + result;
+                        break;
+                    case "0100":
+                        result = "4" + result;
+                        break;
+                    case "0101":
+                        result = "5" + result;
+                        break;
+                    case "0110":
+                        result = "6" + result;
+                        break;
+                    case "0111":
+                        result = "7" + result;
+                        break;
+                    case "1000":
+                        result = "8" + result;
+                        break;
+                    case "1001":
+                        result = "9" + result;
+                        break;
+                    case "1010":
+                        result = "A" + result;
+                        break;
+                    case "1011":
+                        result = "B" + result;
+                        break;
+                    case "1100":
+                        result = "C" + result;
+                        break;
+                    case "1101":
+                        result = "D" + result;
+                        break;
+                    case "1110":
+                        result = "E" + result;
+                        break;
+                    case "1111":
+                        result = "F" + result;
+                        break;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        string n = Console.ReadLine();
+        Console.WriteLine(BinToHex(n));
+    }
+}
+
+07. One system to any other-------------------------------------------------------------------
+
+
+
+08. Binary short---------------------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{
+   
+    public static void Main()
+    {
+        Int16 number = Int16.Parse(Console.ReadLine());
+        var result = Convert.ToString(number, 2);
+
+        if (number > 0)
+        {
+            int max = 16 - result.Length;
+            for (int i = 0; i < max; i++)
+            {
+                result = "0" + result;
+            }
+        }
+
+        if (number == 0)
+        {
+            Console.WriteLine("000000000000000");
+            System.Environment.Exit(1);
+        }
+        
+        Console.WriteLine(result);
+    }
+}

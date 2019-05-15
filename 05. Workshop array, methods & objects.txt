@@ -1,0 +1,278 @@
+1. Messages-----------------------------------------------------------
+
+using System;
+using System.Numerics;
+class MainClass
+{
+    public static BigInteger NumbersDecoding(string firstNumber)
+    {
+        BigInteger result = 0;
+
+        string current = "";
+        string decodedFirstNumber = "";
+
+        for (int i = 0; i < firstNumber.Length; i+=3)
+        {
+            current = char.ToString(firstNumber[i]) + char.ToString(firstNumber[i + 1]) + char.ToString(firstNumber[i + 2]);
+
+            switch (current)
+            {
+                case "cad":
+                    decodedFirstNumber += "0";
+                    break;
+                case "xoz":
+                    decodedFirstNumber += "1";
+                    break;
+                case "nop":
+                    decodedFirstNumber += "2";
+                    break;
+                case "cyk":
+                    decodedFirstNumber += "3";
+                    break;
+                case "min":
+                    decodedFirstNumber += "4";
+                    break;
+                case "mar":
+                    decodedFirstNumber += "5";
+                    break;
+                case "kon":
+                    decodedFirstNumber += "6";
+                    break;
+                case "iva":
+                    decodedFirstNumber += "7";
+                    break;
+                case "ogi":
+                    decodedFirstNumber += "8";
+                    break;
+                case "yan":
+                    decodedFirstNumber += "9";
+                    break;
+            }
+        }
+        result = BigInteger.Parse(decodedFirstNumber);
+
+        return result;
+    }
+
+    public static string SumEncodedNumber (BigInteger firstNumber, BigInteger secondNumber, string mathOperator)
+    {
+        string result = "";
+
+        BigInteger numericResult = 0;
+
+        if (mathOperator == "+")
+        {
+            numericResult = firstNumber + secondNumber;
+        }
+        else if (mathOperator == "-")
+        {
+            numericResult = firstNumber - secondNumber;
+        }
+
+        string finalNumber = Convert.ToString(numericResult);
+        string current = "";
+
+        for (int i = 0; i < finalNumber.Length; i++)
+        {
+            current = char.ToString(finalNumber[i]);
+
+            switch (current)
+            {
+                case "0":
+                    result += "cad";
+                    break;
+                case "1":
+                    result += "xoz";
+                    break;
+                case "2":
+                    result += "nop";
+                    break;
+                case "3":
+                    result += "cyk";
+                    break;
+                case "4":
+                    result += "min";
+                    break;
+                case "5":
+                    result += "mar";
+                    break;
+                case "6":
+                    result += "kon";
+                    break;
+                case "7":
+                    result += "iva";
+                    break;
+                case "8":
+                    result += "ogi";
+                    break;
+                case "9":
+                    result += "yan";
+                    break;
+            }
+        }
+        return result;
+    }
+ 
+    public static void Main()
+    {
+        string firstNumber = Console.ReadLine();
+        string mathOperator = Console.ReadLine();
+        string secondNumber = Console.ReadLine();
+        Console.WriteLine(SumEncodedNumber(NumbersDecoding(firstNumber), NumbersDecoding(secondNumber), mathOperator)); 
+    }
+}
+
+2. DancingMoves-----------------------------------------------------------------------
+
+using System;
+using System.Linq;
+class MainClass
+{
+    static int FindModul(int a, int b)
+    {
+        int result = a % b;
+        return result < 0 ? result + b : result;
+    }
+    public static void Main()
+    {
+        int[] numArr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int countRotations = 0;
+        double sum = 0; 
+        int position = 0;
+
+        while (true)
+        {
+            string move = Console.ReadLine();
+            if (move == "stop")
+            {
+                break;
+            }
+
+            var danceMoves = move.Split(' ');
+            int times = int.Parse(danceMoves[0]);
+            int step = int.Parse(danceMoves[2]);
+
+            double currSum = 0;
+            
+            if (danceMoves[1] == "right")
+            {
+                for (int i = 0; i < times; i++)
+                {
+                    position = (position + step) % numArr.Length;
+                    currSum += numArr[position];
+                }   
+            }
+           else if (danceMoves[1] == "left")
+           {
+               for (int i = 0; i < times; i++)
+               {
+                   position = FindModul(position - step, numArr.Length);
+                   currSum += numArr[position];
+               }                     
+           }
+            sum += currSum; 
+            countRotations++; 
+        }   
+        Console.WriteLine("{0:F1}", sum / countRotations);
+    }
+}
+
+3. Harry-Potter-4D------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+class MainClass
+{
+    public static void Main()
+    {
+        int[] maxDimension = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        int[] harryStartPosition = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        long harryMovesCount = 0;
+        int basiliskAmount = int.Parse(Console.ReadLine());
+        
+        //Storing all the player database into database-------------------------------------
+        Dictionary<string, int[]> dataBase = new Dictionary<string, int[]>();
+
+        dataBase["@"] = new[] { harryStartPosition[0], 
+                                harryStartPosition[1],
+                                harryStartPosition[2],
+                                harryStartPosition[3] };
+        //Creating the amount of basilisk and storing them into the database----------------
+        for (int i = 0; i < basiliskAmount; i++)
+        {
+            string[] basiliskAttributes = Console.ReadLine().Split(' ');
+
+            dataBase[basiliskAttributes[0]] = new[] { int.Parse(basiliskAttributes[1]),
+                                                      int.Parse(basiliskAttributes[2]),
+                                                      int.Parse(basiliskAttributes[3]),
+                                                      int.Parse(basiliskAttributes[4])};
+        }
+        //Input the commands and executing them---------------------------------------------
+        string movingCommand;
+        while ((movingCommand = Console.ReadLine()) != "END")
+        {
+            string[] command = movingCommand.Split(' ');
+            string Name = command[0];
+            int dimension = command[1][0] - 'A';
+            int move = int.Parse(command[2]);
+
+            int currDimension = dataBase[Name][dimension];
+            currDimension += move;
+            //Checking if the player steps out of the dimension-----------------------------
+            if (currDimension < 0)
+            {
+                currDimension = 0;
+            }
+            if (currDimension >= maxDimension[dimension])
+            {
+                currDimension = maxDimension[dimension] - 1;
+            }
+            //Cploading new data------------------------------------------------------------
+            dataBase[Name][dimension] = currDimension;
+            //Checking if Harry steps into a room with basilisk-----------------------------
+            if (Name == "@")
+            {
+                harryMovesCount++;
+
+                List<string> basiliskInTheRoom = new List<string>();
+                foreach (var item in dataBase)
+                {
+                    if (item.Key != "@" &&
+                        dataBase["@"][0] == item.Value[0] &&
+                        dataBase["@"][1] == item.Value[1] &&
+                        dataBase["@"][2] == item.Value[2] &&
+                        dataBase["@"][3] == item.Value[3])
+                    {
+                        basiliskInTheRoom.Add(item.Key);
+                    }
+                }
+
+                if (basiliskInTheRoom.Count > 0)
+                {
+                    basiliskInTheRoom = basiliskInTheRoom.OrderBy(q => q).ToList();
+                    Console.WriteLine("{0}: \"Step {1} was the worst you ever made.\"", basiliskInTheRoom[0], harryMovesCount);
+                    Console.WriteLine("{0}: \"You will regret until the rest of your life... All 3 seconds of it!\"", basiliskInTheRoom[0]);
+                    return;
+                }
+                continue;
+            }
+            //Checking if the basilisk steps into Harry's room------------------------------
+            if (dataBase["@"][0] == dataBase[Name][0] &&
+                dataBase["@"][1] == dataBase[Name][1] &&
+                dataBase["@"][2] == dataBase[Name][2] &&
+                dataBase["@"][3] == dataBase[Name][3])
+            {
+                Console.WriteLine("{0}: \"You thought you could escape, didn't you?\" - {1}", Name, harryMovesCount);
+                return;
+            }
+        }
+        //Checks if Harry is still alive----------------------------------------------------
+        Console.WriteLine("@: \"I am the chosen one!\" - {0}", harryMovesCount);
+    }
+}
+
+4. SoupScript-----------------------------------------------------------------------
+
+
+5. Penguin Airlines-------------------------------------------------------------------

@@ -1,0 +1,247 @@
+02. Reverse string-----------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        string a = Console.ReadLine();
+
+        for (int i = a.Length - 1; i >= 0; i--)
+        {
+            Console.Write(a[i]);
+        }
+    }
+}
+
+03. Correct brackets-----------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        string a = Console.ReadLine();
+
+        int leftCount = 0;
+        int rightCount = 0;
+
+        for (int i = 0; i < a.Length; i++)
+        {
+            string check = a[i].ToString();
+            if (check == "(")
+            {
+                leftCount++;
+            }
+            if (check == ")")
+            {
+                rightCount++;
+            }
+        }
+        if (leftCount == rightCount)
+        {
+            Console.WriteLine("Correct");
+        }
+        else
+        {
+            Console.WriteLine("Incorrect");
+        }
+    }
+}
+
+04. Sub-string in text-----------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        string pattern = Console.ReadLine();
+        string str = Console.ReadLine();        
+        int count = 0;
+        
+        for (int i = 0; i < str.Length; i ++)
+        {
+            if ((i + pattern.Length) <= str.Length)
+            {
+                string subStr = str.Substring(i, pattern.Length);
+                int check = string.Compare(subStr, pattern, true);
+                if (check == 0)
+                {
+                    count++;
+                }
+                continue;
+            }
+            break;
+        }
+        Console.WriteLine(count);
+    }
+}
+
+05. Parse tags-------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        //Input the string--------------------------------------------------------
+        string patternStart = "<upcase>";
+        string patternStop = "</upcase>";
+        string str = Console.ReadLine();
+        //calculating the bounds of the phrase------------------------------------
+        int firstUpperCase = str.IndexOf(patternStart);
+        int lastUpperCase = str.IndexOf(patternStop);
+        int position = lastUpperCase - (firstUpperCase + 8);
+        while (firstUpperCase > -1)
+        {
+            //taking and UPPERCASING the phrase-----------------------------------
+            string phrase = str.Substring(firstUpperCase + 8, position);
+            string upPhrase = phrase.ToUpper();
+            //Upload new info-----------------------------------------------------
+            phrase = patternStart + phrase + patternStop;
+            str = str.Replace(phrase, upPhrase);
+            //Re-calculating the bounds of the phrase-----------------------------
+            firstUpperCase = str.IndexOf(patternStart);
+            lastUpperCase = str.IndexOf(patternStop);
+            position = lastUpperCase - (firstUpperCase + 8);
+        }
+        Console.WriteLine(str);
+    }
+}
+
+06. String length-----------------------------------------------------
+
+using System;
+using System.Text;
+class MainClass
+{
+    public static void Main()
+    {
+        //Input the string--------------------------------------------------------
+        string str = Console.ReadLine();
+
+        if (str.Length < 20)
+        {
+            StringBuilder newStr = new StringBuilder(str, 20);
+            for (int i = str.Length; i < 20; i++)
+            {
+                newStr.Insert(i, '*');
+            }
+            Console.WriteLine(newStr);
+        }
+        else
+        {
+            Console.WriteLine(str);
+        }
+    }
+}
+
+10. Unicode characters-------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void GetEscapeSequence(char c)
+    {
+        Console.Write("\\u" + ((int)c).ToString("X4"));
+    }
+    public static void Main()
+    {
+        string str = Console.ReadLine();
+        for (int i = 0; i < str.Length; i++)
+        {
+            char a = str[i];
+            GetEscapeSequence(a);
+        }   
+    }
+}
+
+12. Parse URL-------------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        //Input URL-------------------------------------------
+        string str = Console.ReadLine();
+        string protocol = "";
+        string server = "";
+        string resource = "";
+        int checkSlash = 0;
+        int position = 0;
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            //Checker for current symbol-----------------------------
+            string check = str[i].ToString();
+            //Takes the protocol-------------------------------------
+            if (check == ":")
+            {
+                protocol = str.Substring(position, i);
+                position = i + 3;
+            }
+            //Takes the server and the resource----------------------
+            if (check == "/")
+            {
+                checkSlash++;
+                if (checkSlash == 3)
+                {
+                    server = str.Substring(position, i - (protocol.Length + 3));
+                    resource = str.Substring(i);
+                    break;
+                }
+            }
+        }
+        Console.WriteLine("[protocol] = {0}\n[server] = {1}\n[resource] = {2}", protocol, server, resource);
+    }
+}
+
+15. Replace tags---------------------------------------------------------
+
+using System;
+ 
+class Program
+{
+    static void Main()
+    {
+        string input = Console.ReadLine();
+        string[] splitted = input.Split(new[] { "<a href=\"", "</a>" }, StringSplitOptions.None);
+        for (int i = 1; i < splitted.Length; i+=2)
+        {
+            int index = splitted[i].IndexOf("\">");
+            string URL = splitted[i].Substring(0, index);
+            string TEXT = splitted[i].Substring(index + 2, splitted[i].Length - index - 2);
+            splitted[i] = "[" + TEXT + "]" + "(" + URL + ")";
+        }
+        Console.WriteLine(string.Join(string.Empty,splitted));
+ 
+    }
+}
+
+23. Series of letters-----------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        //Input URL-------------------------------------------
+        string str = Console.ReadLine();
+        string output = str[0].ToString();
+
+        for (int i = 0; i < str.Length; i++)
+        {
+            if (i + 1 < str.Length)
+            {
+                if (str[i] != str[i + 1])
+                {
+                    output += str[i + 1].ToString();
+                }
+            }
+        }
+        Console.WriteLine(output);
+    }
+}
+

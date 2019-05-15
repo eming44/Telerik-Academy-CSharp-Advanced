@@ -1,0 +1,145 @@
+01. Odd lines----------------------------------------------
+
+using System;
+using System.IO;
+class MainClass
+{
+    public static void Main()
+    {
+        using (var stream = new StreamReader("neshto.txt"))
+        {
+            var line = stream.ReadLine();
+            int countOdd = 0;
+
+            while(line != null)
+            {
+                if (countOdd % 2 == 1)
+                {
+                    Console.WriteLine(line);
+                }
+                line = stream.ReadLine();
+                countOdd++;
+            }
+        }
+    }
+}
+
+02. Concatenate text files----------------------------------
+
+using System;
+using System.IO;
+class MainClass
+{
+    public static void Main()
+    {
+        var lineFileConcatenation = "";
+
+        using (var stream = new StreamReader("neshto.txt"))
+        {
+            var lineFileOne = "";
+            string take = stream.ReadLine();
+            while (take != null)
+            {
+                take = stream.ReadLine();
+                lineFileOne += take;
+            }
+            lineFileConcatenation += lineFileOne;
+
+        }
+
+        using (var stream = new StreamReader("nishto.txt"))
+        {
+            var lineFileTwo = "";
+            string take = stream.ReadLine();
+            while (take != null)
+            {
+                take = stream.ReadLine();
+                lineFileTwo += take;
+            }
+            lineFileConcatenation += lineFileTwo;
+        }
+
+        using (var stream = new StreamWriter("fgh.txt"))
+        { 
+            stream.WriteLine(lineFileConcatenation);
+        }
+    }
+}
+
+03. Line numbers---------------------------------------------------
+
+using System;
+using System.IO;
+class MainClass
+{
+    public static void Main()
+    {
+        using (var stream = new StreamReader("neshto.txt"))
+        {
+            var line = stream.ReadLine();
+            var count = 0;
+            while (line != null)
+            {
+                Console.WriteLine("{0}: {1}", count, line);
+                count++;
+                line = stream.ReadLine();
+            }
+        }
+    }
+}
+
+04. Compare text files------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+class MainClass
+{
+    public static void Main()
+    {
+        var lineOne = "";
+        var lineTwo = "";
+        var wordsOne = new List<string>();
+        var wordsTwo = new List<string>();
+
+        using (var stream = new StreamReader("neshto.txt"))
+        {
+            lineOne = stream.ReadLine();
+            while (lineOne != null)
+            {
+                wordsOne.Add(lineOne);
+                lineOne = stream.ReadLine();
+            }
+        }
+
+        using (var stream = new StreamReader("nishto.txt"))
+        {
+            lineTwo = stream.ReadLine();
+            while (lineTwo != null)
+            {
+                wordsTwo.Add(lineTwo);
+                lineTwo = stream.ReadLine();
+            }
+        }
+
+        int equalLines = 0;
+        int nonEqualLines = 0;
+
+        for (int i = 0; i < wordsOne.Count; i++)
+	    {
+            int a = string.Compare(wordsOne[i], wordsTwo[i]);
+            if (a == 0)
+            {
+                equalLines++;
+            }
+            else
+            {
+                nonEqualLines++;
+            }
+		}
+
+        Console.WriteLine("The equal lines are: {0}", equalLines);
+        Console.WriteLine("The non-equal lines are: {0}", nonEqualLines);       
+    }
+}
+

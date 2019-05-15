@@ -1,0 +1,488 @@
+01. Say Hello----------------------------------------------
+
+using System;
+class MainClass
+{
+     public static void Name(string name)
+    {
+        Console.WriteLine("Hello, {0}!", name);
+    }
+    public static void Main()
+    {
+        Name(Console.ReadLine());
+    }
+}
+
+02. Get largest number-----------------------------------------
+
+using System;
+class MainClass
+{
+     public static int Max(int x, int y)
+    {
+        return Math.Max(x, y);
+    }
+    public static void Main()
+    {
+        string[] numbers = new string[3];
+        numbers = Console.ReadLine().Split(' ');
+
+        int a = Convert.ToInt32(numbers[0]);
+        int b = Convert.ToInt32(numbers[1]);
+        int c = Convert.ToInt32(numbers[2]);
+        int result;
+
+        result = Max(a, b);
+        result = Max(result, c);
+
+        Console.WriteLine(result);
+        
+    }
+}
+
+03. English digit-----------------------------------------
+
+using System;
+class MainClass
+{
+     public static void EnglishDigit(double x)
+    {
+        if (x == 0)
+        {
+            Console.WriteLine("zero");
+        }
+
+        if (x == 1)
+        {
+            Console.WriteLine("one");
+        }
+
+        if (x == 2)
+        {
+            Console.WriteLine("two");
+        }
+
+        if (x == 3)
+        {
+            Console.WriteLine("three");
+        }
+
+        if (x == 4)
+        {
+            Console.WriteLine("four");
+        }
+
+        if (x == 5)
+        {
+            Console.WriteLine("five");
+        }
+
+        if (x == 6)
+        {
+            Console.WriteLine("six");
+        }
+
+        if (x == 7)
+        {
+            Console.WriteLine("seven");
+        }
+
+        if (x == 8)
+        {
+            Console.WriteLine("eight");
+        }
+
+        if (x == 9)
+        {
+            Console.WriteLine("nine");
+        }
+    }
+    public static void Main()
+    {
+        char[] numbers = Console.ReadLine().ToCharArray();
+        double LastDigit = char.GetNumericValue(numbers[numbers.Length - 1]);
+        EnglishDigit(LastDigit);
+    }
+}
+
+04. Appearance count-----------------------------------------------
+
+using System;
+class MainClass
+{
+     public static void Appearance(int x, string[] y, int z)
+    {
+        int count = 0;
+        for (int i = 0; i < x; i++)
+        {
+            if (z == Convert.ToInt32(y[i]))
+            {
+                count++;
+            }
+        }
+        Console.WriteLine(count);  
+    }
+    public static void Main()
+    {
+        int arraySize = int.Parse(Console.ReadLine());
+        string[] numbers = new string[arraySize];
+        numbers = Console.ReadLine().Split(' ');
+        int seekedNumber = int.Parse(Console.ReadLine());
+        Appearance(arraySize, numbers, seekedNumber);
+    }
+}
+
+05. Larger than neighbours-----------------------------------------
+
+using System;
+class MainClass
+{
+     public static void Appearance(int x, string[] y)
+    {
+        int count = 0;
+        for (int i = 1; i < x - 1; i++)
+        {
+            if (Convert.ToInt32(y[i]) > Convert.ToInt32(y[i - 1]) && Convert.ToInt32(y[i]) > Convert.ToInt32(y[i + 1]))
+            {
+                count++;
+            }
+        }
+        Console.WriteLine(count);
+    }
+    public static void Main()
+    {
+        int arraySize = int.Parse(Console.ReadLine());
+        string[] numbers = new string[arraySize];
+        numbers = Console.ReadLine().Split(' ');
+        Appearance(arraySize, numbers);
+    }
+}
+
+06. First larger than neighbours------------------------------------------------------
+
+using System;
+class MainClass
+{
+    static void Appearance(int x, string[] y)
+    {
+        int[] InNumbers = new int[x];
+
+        for (int i = 0; i < x; i++)
+        {
+            InNumbers[i] = int.Parse(y[i]);
+        }
+
+        int count = 0;
+        for (int i = 1; i < y.Length - 1; i++)
+        {
+            if (InNumbers[i] > InNumbers[i - 1] && InNumbers[i] > InNumbers[i + 1])
+            {
+                Console.WriteLine(i);
+                break;
+            }
+
+            else
+            {
+                count++;
+            }
+        }
+       if (count == y.Length - 2)
+       {
+           Console.WriteLine("-1");
+       }
+    }
+    static void Main()
+    {
+        int arraySize = int.Parse(Console.ReadLine());
+        string[] numbers = new string[arraySize];
+        numbers = Console.ReadLine().Split(' ');
+
+        Appearance(arraySize, numbers);
+    }
+}
+
+07. Reverse number----------------------------------------------------------
+
+using System;
+class MainClass
+{
+    static void ReverseNumbers(char[] numbers)
+    {
+        for (int i = numbers.Length - 1; i >= 0; i--)
+        {
+            Console.Write(numbers[i]);
+        }
+    }
+    static void Main()
+    {
+        string a = Console.ReadLine();
+        char[] numbers = a.ToCharArray();
+        ReverseNumbers(numbers);
+    }
+}
+
+08. Number as array-------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void FillArray(int biggerArraySize)
+    {
+        int[] arrayOne = new int[biggerArraySize];
+        int[] arrayTwo = new int[biggerArraySize];
+
+        for (int i = 0; i < 2; i++)
+        {
+            string[] arr = Console.ReadLine().Split(' ');
+              
+            for (int j = 0; j < biggerArraySize; j++)
+            {
+                if (i == 0)
+                {
+                    if (j > arr.Length - 1)
+                    {
+                        arrayOne[j] = 0;
+                    }
+                    else
+                    {
+                        arrayOne[j] = int.Parse(arr[j]);
+                    }   
+                }
+
+                if (i == 1)
+                {
+                    if (j > arr.Length - 1)
+                    {
+                        arrayTwo[j] = 0;
+                    }
+                    else
+                    {
+                        arrayTwo[j] = int.Parse(arr[j]);
+                    }
+                }
+            }
+        }
+
+        ReverseNumbers(arrayOne, arrayTwo, biggerArraySize);
+    }
+
+    public static void ReverseNumbers(int[] numbers1, int[] numbers2, int biggerArraySize)
+    {
+        int[] result = new int[biggerArraySize];
+
+        for (int i = 0; i < numbers1.Length; i++)
+        {
+            result[i] = result[i] + numbers1[i] + numbers2[i];
+            if (result[i] > 9 && result[i] < 99)
+            {
+                result[i + 1]++;
+                result[i] %= 10;
+            }
+        }
+        Console.WriteLine(string.Join(" ", result));
+
+    }
+    public static void Main()
+    {
+        string[] arraySize = new string[2]; 
+        arraySize = Console.ReadLine().Split(' ');
+        int biggerArraySize = Math.Max(Convert.ToInt32(arraySize[0]), Convert.ToInt32(arraySize[1]));
+        FillArray(biggerArraySize); 
+    }
+}
+
+09. Sorting array--------------------------------------------------------------
+
+using System;
+class MainClass
+{  
+    public static void FillArray(int n)
+    {
+        string[] arr = new string[n];
+        arr = Console.ReadLine().Split(' ');
+        int[] convertedArray = new int[n];
+
+        for (int i = 0; i < n; i++)
+        {
+            convertedArray[i] = int.Parse(arr[i]);
+        }
+
+        Array.Sort(convertedArray);
+        Console.WriteLine(string.Join(" ", convertedArray));
+    }
+
+    public static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        FillArray(n);
+    }
+}
+
+10. N Factorial---------------------------------------------------------------
+
+using System;
+using System.Numerics;
+
+class MainClass
+{  
+    public static void FillArray(int n)
+    {
+        BigInteger result = 1;
+
+        for (int i = 1; i <= n; i++)
+        {
+            result *= i;
+        }
+        Console.WriteLine(result);
+    }
+
+    public static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        FillArray(n);
+    }
+}
+
+11. Adding polynomials-------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void FillArray(int biggerArraySize)
+    {
+        int[] arrayOne = new int[biggerArraySize];
+        int[] arrayTwo = new int[biggerArraySize];
+
+        for (int i = 0; i < 2; i++)
+        {
+            string[] arr = Console.ReadLine().Split(' ');
+
+            for (int j = 0; j < biggerArraySize; j++)
+            {
+                if (i == 0)
+                {
+                    if (j > arr.Length - 1)
+                    {
+                        arrayOne[j] = 0;
+                    }
+                    else
+                    {
+                        arrayOne[j] = int.Parse(arr[j]);
+                    }
+                }
+
+                if (i == 1)
+                {
+                    if (j > arr.Length - 1)
+                    {
+                        arrayTwo[j] = 0;
+                    }
+                    else
+                    {
+                        arrayTwo[j] = int.Parse(arr[j]);
+                    }
+                }
+            }
+        }
+
+        ReverseNumbers(arrayOne, arrayTwo, biggerArraySize);
+    }
+
+    public static void ReverseNumbers(int[] numbers1, int[] numbers2, int biggerArraySize)
+    {
+        int[] result = new int[biggerArraySize];
+
+        for (int i = 0; i < numbers1.Length; i++)
+        {
+            result[i] = result[i] + numbers1[i] + numbers2[i];
+        }
+        Console.WriteLine(string.Join(" ", result));
+
+    }
+    public static void Main()
+    {
+        int n = int.Parse(Console.ReadLine());
+        FillArray(n);
+    }
+}
+
+
+14. Integer calculations---------------------------------------------------------
+
+using System;
+using System.Numerics;
+class MainClass
+{
+    public static void FillArray(string[] arr, int length)
+    {
+        int[] convertedArray = new int[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            convertedArray[i] = int.Parse(arr[i]);
+        }
+        MinimumNumber(convertedArray);
+    }
+
+    public static void MinimumNumber(int[] arr)
+    {
+        int min = arr[0];
+
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (min > arr[i])
+            {
+                min = arr[i];
+            }
+        }
+        Console.WriteLine(min);
+        MaximalNumber(arr);
+    }
+
+    public static void MaximalNumber(int[] arr)
+    {
+        int max = arr[0];
+
+        for (int i = 1; i < arr.Length; i++)
+        {
+            if (max < arr[i])
+            {
+                max = arr[i];
+            }
+        }
+        Console.WriteLine(max);
+        AverageNumber(arr);
+    }
+
+    public static void AverageNumber(int[] arr)
+    {
+        double average = 0;
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            average += arr[i];
+        }
+
+        Console.WriteLine("{0:F2}", average / arr.Length);
+        Console.WriteLine(average);
+        ProductNumbers(arr);
+    }
+
+    public static void ProductNumbers(int[] arr)
+    {
+        BigInteger product = 1;
+
+        for (int i = 0; i < arr.Length; i++)
+        {
+            product *= arr[i];
+        }
+        Console.WriteLine(product);
+    }
+
+    public static void Main()
+    {
+        string[] arr = Console.ReadLine().Split(' ');
+        int length = arr.Length;
+        FillArray(arr, length);
+    }
+}

@@ -1,0 +1,141 @@
+01. Leap year------------------------------------------------------
+
+using System;
+
+class MainClass
+{
+   
+    public static void Main()
+    {
+        int now = int.Parse(Console.ReadLine());
+        if (DateTime.IsLeapYear(now))
+        {
+            Console.WriteLine("Leap");
+        }
+        else
+        {
+            Console.WriteLine("Common");
+        }
+    }
+}
+
+02. Random numbers-----------------------------------------------
+
+using System;
+class MainClass
+{
+ 
+    public static void Main()
+    {
+        Random number = new Random();
+        for (int i = 0; i < 10; i++)
+        {
+            int randomNumber = number.Next(100, 200);
+            Console.WriteLine(randomNumber);
+        }
+    }
+}
+
+03. Day of week--------------------------------------------------
+
+using System;
+class MainClass
+{
+    static void Main()
+    {
+        Console.WriteLine(DateTime.Today.DayOfWeek);
+    }
+}
+
+04. Triangle surface by side and altitude--------------------------------
+
+using System;
+
+class MainClass
+{
+   public static void CalculateSurface(double side, double altitude)
+    {
+        double result = (side * altitude) / 2;
+        Console.WriteLine("{0:F2}", result); 
+    }
+
+
+    public static void Main()
+    {
+        double side = double.Parse(Console.ReadLine());
+        double altitude = double.Parse(Console.ReadLine());
+        CalculateSurface(side, altitude);
+    }
+}
+
+05. Triangle surface by three sides------------------------------------------
+
+using System;
+
+class MainClass
+{
+   public static void CalculateSurface(double a, double b, double c)
+    {
+        double perimeter = (a + b + c) / 2;
+        double result = Math.Sqrt(perimeter * (perimeter - a) * (perimeter - b) * (perimeter - c));
+
+        Console.WriteLine("{0:F2}", result);
+    }
+
+
+    public static void Main()
+    {
+        double a = double.Parse(Console.ReadLine());
+        double b = double.Parse(Console.ReadLine());
+        double c = double.Parse(Console.ReadLine());
+        CalculateSurface(a, b, c);
+    }
+}
+
+06. Triangle surface by two sides and an angle-----------------------------------
+
+using System;
+
+class MainClass
+{
+   public static void CalculateSurface(double a, double b, double degrees)
+    {
+        double angle = Math.PI * degrees / 180.0;
+        double result = (a * b * (Math.Sin(angle))) / 2;
+
+        Console.WriteLine("{0:F2}", result);
+    }
+
+    public static void Main()
+    {
+        double a = double.Parse(Console.ReadLine());
+        double b = double.Parse(Console.ReadLine());
+        double degrees = double.Parse(Console.ReadLine());
+        CalculateSurface(a, b, degrees);   
+    }
+}
+
+08. Sum integers---------------------------------------------------------
+
+using System;
+
+class MainClass
+{
+   public static int CalculateNumbers(string[] numbers)
+    {
+        int result = 0;
+
+        foreach (string item in numbers)
+        {
+            result += int.Parse(item);
+        }
+        return result;
+    }
+
+    public static void Main()
+    {
+        string num = Console.ReadLine();
+        string[] numbers = num.Split(' ');
+        Console.WriteLine(CalculateNumbers(numbers));
+    }
+}

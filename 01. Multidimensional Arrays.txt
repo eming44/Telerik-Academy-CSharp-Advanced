@@ -1,0 +1,436 @@
+01. Fill the matrix----------------------------------------------------------------------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        long n = long.Parse(Console.ReadLine());
+        string ch = Console.ReadLine();
+        if (n < 1 || n > 128) { System.Environment.Exit(1); }
+        
+
+        int[,] matrix = new int[n, n];
+        long maxRotations = n * n;
+        int count = 1;
+
+        if (ch == "a")
+        {
+            for (int c = 0; c < n; c++)
+            {
+                for (int r = 0; r < n; r++)
+                {
+                    if (count > maxRotations) { break; }
+                    matrix[r, c] = count;
+                    count++;
+                }
+            }
+
+            for (int r = 0; r < matrix.GetLength(0); r++)
+            {
+                for (int c = 0; c < matrix.GetLength(1); c++)
+                {
+                    if (c == matrix.GetLength(1) - 1)
+                    {
+                        Console.Write("{0}", matrix[r, c]);
+                    }
+                    else
+                    {
+                        Console.Write("{0} ", matrix[r, c]);
+                    }
+                }
+                Console.WriteLine();
+            }
+
+        }
+
+        else if (ch == "b")
+        {
+            for (int c = 0; c < n; c++)
+            {
+                long r;
+
+                if (c % 2 == 0)
+                {
+                    for (r = 0; r < n; r++)
+                    {
+                        if (count > maxRotations) { break; }
+                        matrix[r, c] = count;
+                        count++;
+                    }
+                }
+
+                if (c % 2 == 1)
+                {
+                    for (r = n - 1; r >= 0; r--)
+                    {
+                        if (count > maxRotations) { break; }
+                        matrix[r, c] = count;
+                        count++;
+                    }
+                }
+            }
+
+            for (int r = 0; r < matrix.GetLength(0); r++)
+            {
+                for (int c = 0; c < matrix.GetLength(1); c++)
+                {
+                    if (c == matrix.GetLength(1) - 1)
+                    {
+                        Console.Write("{0}", matrix[r, c]);
+                    }
+                    else
+                    {
+                        Console.Write("{0} ", matrix[r, c]);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+
+        else if (ch == "c")
+        {
+            long Row = n - 1;
+            int Col = 0;
+            long startRow = n - 1;
+            int startCol = 0;
+
+            while (count < n * n)
+            {
+                if (Row == (n - 1) && Col < (n - 1))
+                {
+                    if (count == 1)
+                    {
+                        matrix[Col, Row] = count;
+                    }
+                    startRow--;
+                    startCol = 0;
+                    Row = startRow;
+                    Col = startCol;
+                    count++;
+                    matrix[Col, Row] = count;
+
+                    while (Row < (n - 1) && Col < (n - 1))
+                    {
+                        Row++;
+                        Col++;
+                        count++;
+                        matrix[Col, Row] = count;
+                    }
+                }
+                if (Row <= (n - 1) && Col == (n - 1))
+                {
+                    startRow = 0;
+                    startCol++;
+                    Row = startRow;
+                    Col = startCol;
+                    count
+                        ++;
+                    matrix[Col, Row] = count;
+
+                    while (Col < (n - 1))
+                    {
+                        Col++;
+                        Row++;
+                        count++;
+                        matrix[Col, Row] = count;
+                    }
+                }
+            }
+
+            for (int r = 0; r < matrix.GetLength(0); r++)
+            {
+                for (int c = 0; c < matrix.GetLength(1); c++)
+                {
+                    if (c == matrix.GetLength(1) - 1)
+                    {
+                        Console.Write("{0}", matrix[c, r]);
+                    }
+                    else
+                    {
+                        Console.Write("{0} ", matrix[c, r]);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+
+        else if (ch == "d")
+        {
+            int row = 0;
+            int col = 0;
+            string direction = "down";
+
+            for (int i = 1; i <= maxRotations; i++)
+            {
+
+
+                if (direction == "down" && (row > n - 1 || matrix[row, col] != 0))
+                {
+                    direction = "right";
+                    row--;
+                    col++;
+                }
+
+                if (direction == "right" && (col > n - 1 || matrix[row, col] != 0))
+                {
+                    direction = "up";
+                    col--;
+                    row--;
+                }
+
+                if (direction == "up" && (row < 0 || matrix[row, col] != 0))
+                {
+                    direction = "left";
+                    row++;
+                    col--;
+                }
+
+                if (direction == "left" && (col < 0 || matrix[row, col] != 0))
+                {
+                    direction = "down";
+                    col++;
+                    row++;
+                }
+
+                matrix[row, col] = i;
+
+                if (direction == "down") { row++; }
+                if (direction == "right") { col++; }
+                if (direction == "up") { row--; }
+                if (direction == "left") { col--; }
+            }
+
+            for (int r = 0; r < matrix.GetLength(0); r++)
+            {
+                for (int c = 0; c < matrix.GetLength(1); c++)
+                {
+                    if (c == matrix.GetLength(1) - 1)
+                    {
+                        Console.Write("{0}", matrix[r, c]);
+                    }
+                    else
+                    {
+                        Console.Write("{0} ", matrix[r, c]);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        else { System.Environment.Exit(1); }
+    }
+}
+
+02. Maximal sum-----------------------------------------------------------------------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+
+        string numbers = Console.ReadLine();
+        string[] index = new string[2];
+        index = numbers.Split(' ');
+
+
+        short n = short.Parse(index[0]);
+        short m = short.Parse(index[1]);
+
+
+        int[,] matrix = new int[n, m];
+        string[] numbersOfMatrix = new string[m];
+
+        for (short r = 0; r < n; r++)
+        {
+            numbersOfMatrix = Console.ReadLine().Split(' ');
+
+            for (short c = 0; c < m; c++)
+            {
+                matrix[r,c] = Convert.ToInt32(numbersOfMatrix[c]);
+            }
+        }
+
+        int maxSum = int.MinValue;
+        for (short r = 1; r < matrix.GetLength(0) - 1; r++)
+        {
+            for (short c = 1; c < matrix.GetLength(1) - 1; c++)
+            {
+                int sum = matrix[r, c]
+                    + matrix[r - 1, c]
+                    + matrix[r, c - 1]
+                    + matrix[r - 1, c - 1]
+                    + matrix[r - 1, c + 1]
+                    + matrix[r, c + 1]
+                    + matrix[r + 1, c + 1]
+                    + matrix[r + 1, c]
+                    + matrix[r + 1, c - 1];
+
+                if (maxSum < sum)
+                {
+                    maxSum = sum;
+                }
+            }
+        }
+        Console.WriteLine(maxSum); 
+    }
+}
+
+03. Sequence in matrix------------------------------------------------------------------------------------------------------------------
+
+using System;
+class MainClass
+{
+    public static void Main()
+    {
+        string[] nm = new string[2];
+        nm = Console.ReadLine().Split(' ');
+
+        int n = int.Parse(nm[0]);
+        int m = int.Parse(nm[1]);
+
+        int[,] matrix = new int[n,m];
+        string[] numberOfMatrix = new string[m];
+
+        for (int r = 0; r < n; r++)
+        {
+            numberOfMatrix = Console.ReadLine().Split(' ');
+            for (int c = 0; c < m; c++)
+            {
+                matrix[r, c] = Convert.ToInt32(numberOfMatrix[c]);
+            }
+        }
+
+        int diagonal = 0;
+        int diagonalLeft = 0;
+        int row = 0;
+        int col = 0;
+
+        int currDiagonal = 1;
+        int currDiagonalLeft = 1;
+        int currRow = 1;
+        int currCol = 1;
+
+        for (int r = 0; r < n; r++)
+        {
+            for (int c = 0; c < m; c++)
+            {
+                //col----------------------------------------------------------------
+                if (c < m - 1)
+                {
+                    if (matrix[r, c] == matrix[r, c + 1])
+                    {
+                        currCol++;
+
+                        while(true)
+                        {
+                            if ((c + currCol <= m - 1) && matrix[r, c] == matrix[r, c + currCol])
+                            {
+                                currCol++;
+                            }
+                            else
+                            {
+                                if (col < currCol)
+                                {
+                                    col = currCol;
+                                }
+                                currCol = 1;
+                                break; 
+                            }
+                        } 
+                    }
+                    else { currCol = 1; }
+                }
+                //row-------------------------------------------------------------
+                if (r < n - 1)
+                {
+                    if (matrix[r, c] == matrix[r + 1, c])
+                    {
+                        currRow++;
+
+                        while (true)
+                        {
+                            if ((r + currRow <= n - 1) && matrix[r, c] == matrix[r + currRow, c])
+                            {
+                                currRow++;
+                            }
+                            else
+                            {
+                                if (row < currRow)
+                                {
+                                    row = currRow;
+                                }
+                                currRow = 1;
+                                break;
+                            }
+                        }    
+                    }
+                    else { currRow = 1; }
+                }
+                //diagonal-------------------right----------------------------
+                if (c < m - 1 && r < n - 1)
+                {
+                    if (matrix[r, c] == matrix[r + 1, c + 1])
+                    {
+                        currDiagonal++;
+
+                        while (true)
+                        {
+                            if ((r + currDiagonal <= n - 1) && (c + currDiagonal <= m - 1) && matrix[r, c] == matrix[r + currDiagonal, c + currDiagonal])
+                            {
+                                currDiagonal++;
+                            }
+                            else
+                            {
+                                if (diagonal < currDiagonal)
+                                {
+                                    diagonal = currDiagonal;
+                                }
+                                currDiagonal = 1;
+                                break;
+                            }
+                        }
+                    }
+                    else { currDiagonal = 1; }   
+                }
+                //diagonal---------------------left--------------------------
+                if (c > 0 && r >= 0 && (r < n - 1))
+                {
+                    if (matrix[r, c] == matrix[r + 1, c - 1])
+                    {
+                        currDiagonalLeft++;
+
+                        while(true)
+                        {
+                            if ((r + currDiagonalLeft <= n - 1) && (c - currDiagonalLeft >= 0) && matrix[r, c] == matrix[r + currDiagonalLeft, c - currDiagonalLeft])
+                            {
+                                currDiagonalLeft++;
+                            }
+                            else
+                            {
+                                if (diagonalLeft < currDiagonalLeft)
+                                {
+                                    diagonalLeft = currDiagonalLeft;
+                                }
+                                currDiagonalLeft = 1;
+                                break;
+                            }
+                        }
+                    }
+                    else { currDiagonalLeft = 1; }
+                }
+            }
+        }
+        int[] arr = new int[4];
+        arr[0] = row;
+        arr[1] = col;
+        arr[2] = diagonal;
+        arr[3] = diagonalLeft;
+        Array.Sort(arr);
+
+        Console.WriteLine(arr[3]);
+    }
+}
+
+07. Largest area in matrix--------------------------------------------------------------------------------------------------------
+

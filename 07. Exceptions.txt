@@ -1,0 +1,82 @@
+01. Square root----------------------------------------------------
+
+using System;
+class MainClass
+{
+    static void CheckNumber()
+    {
+        try
+        {
+            double result = double.Parse(Console.ReadLine());
+            if (result < 0)
+            {
+                throw new FormatException();
+            }
+            result = Math.Sqrt(result);
+            Console.WriteLine("{0:F3}", result);
+        }
+        catch
+        {
+            Console.WriteLine("Invalid number");
+        }
+        finally
+        {
+            Console.WriteLine("Good bye");
+        }
+    }
+    public static void Main()
+    {
+        CheckNumber();
+    }
+}
+
+02. Enter numbers----------------------------------------------------------
+
+using System;
+class MainClass
+{
+    static void CheckNumber(int start, int end)
+    {
+        int check = 0;
+        string line = "";
+        
+        try
+        {
+            for (int i = 0; i < 10; i++)
+			{
+                if (i == 0)
+                {
+                    int n = int.Parse(Console.ReadLine());
+                    if (n <= start || n >= end)
+                    {
+                        throw new FormatException();
+                    }
+                    line += n;
+                    check = n;
+                }
+                else
+                {
+                    int n = int.Parse(Console.ReadLine());
+                    if (n <= start || n >= end || n <= check)
+                    {
+                        throw new FormatException();
+                    }
+                    line += " < " + n;
+                    check = n;
+                }
+
+            }
+            Console.WriteLine("1 < " + line + " < 100");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Exception");
+        }
+    }
+    public static void Main()
+    {
+        int start = 1;
+        int end = 100;
+        CheckNumber(start, end);
+    }
+}
